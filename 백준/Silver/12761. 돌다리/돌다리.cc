@@ -25,24 +25,9 @@ int BreadthFirstSearch() {
     if (curr_val == m)
       return visited[curr_val];
     
-    vector<int> moves1 = { 1, -1, a, -a, b, -b };
-    for (int i = 0; i < ssize(moves1); ++i) {
-      int next_val = curr_val + moves1[i];
-      
-      if (next_val < 0 || next_val > 100'000)
-        continue;
-      
-      int& visit = visited[next_val];
-      if (visit != -1)
-        continue;
-      
-      q.push(next_val);
-      visit = visited[curr_val] + 1;
-    }
-
-    vector<int> moves2 = { a, b };
-    for (int i = 0; i < ssize(moves2); ++i) {
-      int next_val = curr_val * moves2[i];
+    vector<int> nexts = { curr_val + 1, curr_val - 1, curr_val + a, curr_val - a, curr_val + b, curr_val -b, curr_val * a, curr_val * b };
+    for (int i = 0; i < ssize(nexts); ++i) {
+      int next_val = nexts[i];
       
       if (next_val < 0 || next_val > 100'000)
         continue;
