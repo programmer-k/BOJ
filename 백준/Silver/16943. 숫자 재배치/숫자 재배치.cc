@@ -38,10 +38,10 @@ void CalcMax(int index, vector<bool>& selected, string& result) {
 }
 
 void Solve() {
-  /*if (a.size() > b.size()) {
+  if (a.size() > b.size()) {
     cout << "-1\n";
     return;
-  } else if (a.size() < b.size()) {
+  } /*else if (a.size() < b.size()) {
     sort(a.begin(), a.end(), greater<char>());
     cout << a << '\n';
   }*/
