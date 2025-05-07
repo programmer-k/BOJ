@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <numeric>
 using namespace std;
 
 int d1, d2;
+vector<vector<bool>> occupied(2001, vector<bool>(2001));
 
 void GetInput() {
   cin.tie(nullptr);
@@ -12,21 +14,21 @@ void GetInput() {
 }
 
 void Solve() {
-  vector<int> arr(d2 + 1);
-  for (int i = 1; i <= d2; ++i) {
-    arr[i] = i;
-  }
+  int count = 0;
+  for (int i = d1; i <= d2; ++i) {
+    for (int j = 0; j < i; ++j) {
+      int val = gcd(i, j);
+      int numerator = j / val;
+      int denominator = i / val;
 
-  for (int i = 1; i <= d2; ++i) {
-    for (int j = i + i; j <= d2; j += i) {
-      arr[j] -= arr[i];
+      if (!occupied[numerator][denominator]) {
+        occupied[numerator][denominator] = true;
+        ++count;
+      }
     }
   }
 
-  int total = 0;
-  for (int i = 1; i <= d2; ++i)
-    total += arr[i];
-  cout << total << '\n';
+  cout << count << '\n';
 }
 
 int main(void) {
