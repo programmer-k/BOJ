@@ -28,7 +28,7 @@ void Solve() {
     }
   }
 
-  for (int i = h; i > 0; --i) {
+  for (int i = h - 1; i > 0; --i) {
     bottoms[i - 1] += bottoms[i];
     tops[i - 1] += tops[i];
   }
@@ -36,11 +36,6 @@ void Solve() {
   for (int i = 1; i <= h; ++i) {
     totals[i] = bottoms[i] + tops[h + 1 - i];
   }
-
-  /*for (int i = 1; i < h; ++i) {
-    cout << totals[i] << ' ';
-  }
-  cout << '\n';*/
 
   int min_val = 1234567890;
   int min_count = -1;
