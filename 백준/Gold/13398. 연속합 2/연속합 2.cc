@@ -23,7 +23,7 @@ void Solve() {
 
   for (int i = 2; i < n; ++i) {
     dp[0][i] = max(arr[i], dp[0][i - 1] + arr[i]);
-    dp[1][i] = max({ dp[0][i - 2] + arr[i], dp[1][i - 1] + arr[i] });
+    dp[1][i] = max(dp[0][i - 2] + arr[i], dp[1][i - 1] + arr[i]);
   }
 
   int max_val = numeric_limits<int>::min();
