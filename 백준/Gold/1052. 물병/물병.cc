@@ -12,30 +12,7 @@ void GetInput() {
   cin >> n >> k;
 }
 
-/*int CalcMinBottleToBuy(int bottle, int bottle_to_buy, vector<int>& remainders, int remainders_total) {
-  cout << "CalcMinBottleToBuy(" << bottle << ")" << endl;
-  int quotient = bottle / 2;
-  int remainder = bottle % 2;
-  remainders.push_back(remainder);
-  remainders_total += remainder;
-
-  if (quotient + remainders_total <= k) {
-    return bottle_to_buy;
-  }
-
-  if (quotient == 0) {
-    for (int i = 0; i < ssize(remainders); ++i) {
-
-    }
-  }
-
-  CalcMinBottleToBuy(quotient, bottle_to_buy, remainders, remainders_total);
-}*/
-
 void Solve() {
-  //vector<int> remainders;
-  //cout << CalcMinBottleToBuy(n, 0, remainders, 0) << '\n';
-
   int power_of_two = 8388608;
   priority_queue<int, vector<int>, greater<int>> pq;
   while (power_of_two) {
