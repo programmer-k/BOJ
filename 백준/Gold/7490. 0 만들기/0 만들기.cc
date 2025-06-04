@@ -12,7 +12,7 @@ void GetInput2() {
   scanf("%d", &n);
 }
 
-void FindAllZeroExpressions(int index, int val) {
+void FindAllZeroExpressions(int index) {
   if (index == n - 1) {
     int total = 0;
     int temp = 1;
@@ -42,15 +42,15 @@ void FindAllZeroExpressions(int index, int val) {
   }
 
   expression[index * 2 + 1] = ' ';
-  FindAllZeroExpressions(index + 1, 0);
+  FindAllZeroExpressions(index + 1);
   expression[index * 2 + 1] = '+';
-  FindAllZeroExpressions(index + 1, 0);
+  FindAllZeroExpressions(index + 1);
   expression[index * 2 + 1] = '-';
-  FindAllZeroExpressions(index + 1, 0);
+  FindAllZeroExpressions(index + 1);
 }
 
 void Solve() {
-  FindAllZeroExpressions(0, 1);
+  FindAllZeroExpressions(0);
   printf("\n");
 }
 
