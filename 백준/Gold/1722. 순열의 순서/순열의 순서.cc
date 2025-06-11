@@ -70,7 +70,6 @@ int64_t FindPermutationOrder(int index, int64_t permutation_index) {
   if (index == n)
     return permutation_index;
 
-  //cout << "(" << index << ", " << permutation_index << endl;
   int num_order = GetNumOrder(arr[index]);
   int64_t curr_permuation_index = num_order * factorials[n - index - 1];
   return FindPermutationOrder(index + 1, permutation_index + curr_permuation_index);
