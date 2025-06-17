@@ -18,8 +18,8 @@ void GetInput() {
 }
 
 void Solve() {
-  for (int i = 1; i <= 100; ++i) {
-    for (int j = 0; j <= 10'000; ++j) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 0; j <= t; ++j) {
       if (j - studies[i].first >= 0)
         dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - studies[i].first] + studies[i].second);
       else
