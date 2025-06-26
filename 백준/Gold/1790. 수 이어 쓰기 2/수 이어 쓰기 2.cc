@@ -50,8 +50,8 @@ void Solve() {
   int64_t target = start + offset;
 
   if (target > n) {
-      cout << -1 << '\n';
-      return;
+    cout << -1 << '\n';
+    return;
   }
 
   string s = to_string(target);
