@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-
 #include <utility>
 #include <queue>
 #include <functional>
@@ -9,25 +7,12 @@
 using namespace std;
 
 int s;
-vector<int> dp(2'001, -1);
 
 void GetInput() {
   cin.tie(nullptr);
   ios::sync_with_stdio(false);
 
   cin >> s;
-}
-
-int CalculateMinTime(int emoticon) {  
-  if (dp[emoticon] != -1)
-    return dp[emoticon];
-
-  vector<int> candidates;
-  for (int i = 2; i <= emoticon; ++i)
-    if (emoticon % i == 0)
-      candidates.push_back(CalculateMinTime(emoticon / i) + i);
-
-  return dp[emoticon] = *min_element(candidates.begin(), candidates.end());
 }
 
 void Dijkstra() {
@@ -65,9 +50,6 @@ void Dijkstra() {
 }
 
 void Solve() {
-  //dp[1] = 0;
-  //CalculateMinTime(2'000);
-
   Dijkstra();
 }
 
