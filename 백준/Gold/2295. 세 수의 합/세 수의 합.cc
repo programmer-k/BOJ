@@ -6,7 +6,7 @@ using namespace std;
 
 int n;
 vector<int> arr;
-unordered_set<int> s;
+//unordered_set<int> s;
 
 void GetInput() {
   cin.tie(nullptr);
@@ -28,7 +28,8 @@ void Solve() {
   for (int x = 0; x < n; ++x) {
     for (int y = x; y < n; ++y) {
       int total1 = arr[x] + arr[y];
-      int k = y + 1;
+      //int k = y + 1;
+      int dist = y + 1;
       for (int z = y; z < n; ++z) {
         int total2 = total1 + arr[z];
 
@@ -38,12 +39,20 @@ void Solve() {
         /*if (binary_search(arr.begin() + z + 1, arr.end(), total2)) {
           max_val = max(max_val, total2);
         }*/
-        while (k < n && arr[k] < total2) {
+        /*while (k < n && arr[k] < total2) {
           ++k;
         }
 
         if (k != n && arr[k] == total2)
           max_val = max(max_val, arr[k]);
+        */
+
+        vector<int>::iterator it = lower_bound(arr.begin() + dist, arr.end(), total2);
+        
+        dist = it - arr.begin();
+        if (it != arr.end() && *it == total2) {
+          max_val = max(max_val, total2);
+        }
       }
     }
   }
