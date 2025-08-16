@@ -57,7 +57,6 @@ bool Paint(int row, int col, int sticker_index) {
     }
   }
 
-  //cout << "Paint at " << row << ", " << col << "\n";
   for (int i = 0; i < sticker_rows; ++i) {
     for (int j = 0; j < sticker_cols; ++j) {
       int map_row = i + row;
@@ -83,22 +82,12 @@ void Paint(int sticker_index) {
     }
 
     Rotate(sticker_index);
-    //cout << "Rotate!" << '\n';
   }
 }
 
 void Solve() {
   for (int i = 0; i < k; ++i) {
-    //cout << "Paint: " << i << '\n';
     Paint(i);
-
-    /*for (int i = 0; i < n; ++i) {
-      for (int j = 0; j < m; ++j) {
-        cout << map[i][j] << ' ';
-      }
-      cout << '\n';
-    }
-    cout << "=========================\n";*/
   }
 
   int count = 0;
