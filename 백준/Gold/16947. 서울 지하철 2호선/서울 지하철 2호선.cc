@@ -1,7 +1,7 @@
-#include <iostream>
-#include <vector>
-#include <queue>
 #include <algorithm>
+#include <iostream>
+#include <queue>
+#include <vector>
 using namespace std;
 
 int n;
@@ -29,7 +29,7 @@ bool DepthFirstSearch(int node, int prev_node, int revisit_node) {
   for (int next_node : edges[node]) {
     if (!visited[next_node])
       ret |= DepthFirstSearch(next_node, node, revisit_node);
-    
+
     if (prev_node != revisit_node && next_node == revisit_node)
       ret = true;
   }
@@ -42,7 +42,7 @@ bool DepthFirstSearch(int node, int prev_node, int revisit_node) {
 void BreathFirstSearch() {
   queue<int> q;
   vector<int> dists(n + 1, -1);
-  
+
   for (int i = 1; i <= n; ++i) {
     if (is_circular_line[i]) {
       q.push(i);
@@ -70,11 +70,13 @@ void BreathFirstSearch() {
 void Solve() {
   visited.resize(n + 1);
   is_circular_line.resize(n + 1);
-  
+
   for (int i = 1; i <= n; ++i) {
     if (!is_circular_line[i]) {
       fill(visited.begin(), visited.end(), false);
-      DepthFirstSearch(i, -1, i);
+      if (DepthFirstSearch(i, -1, i)) {
+        break;
+      }
     }
   }
 
