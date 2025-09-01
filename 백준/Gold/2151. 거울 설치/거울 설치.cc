@@ -1,7 +1,7 @@
 #include <iostream>
-#include <vector>
-#include <utility>
 #include <queue>
+#include <utility>
+#include <vector>
 using namespace std;
 
 int n;
@@ -31,25 +31,25 @@ int BreadthFirstSearch() {
     int col = p.second;
     q.pop();
 
-    vector<int> move_rows = { 1, 0, -1, 0 };
-    vector<int> move_cols = { 0, 1, 0, -1 };
+    vector<int> move_rows = {1, 0, -1, 0};
+    vector<int> move_cols = {0, 1, 0, -1};
     for (int i = 0; i < 4; ++i) {
       int next_row = row;
       int next_col = col;
-      
+
       while (true) {
         next_row += move_rows[i];
         next_col += move_cols[i];
 
         if (next_row < 0 || next_col < 0 || next_row >= n || next_col >= n)
           break;
-        
+
         if (map[next_row][next_col] == '*')
           break;
 
         if (visited[next_row][next_col] != -1)
           continue;
-        
+
         if (map[next_row][next_col] == '!')
           q.push({next_row, next_col});
         visited[next_row][next_col] = visited[row][col] + 1;
