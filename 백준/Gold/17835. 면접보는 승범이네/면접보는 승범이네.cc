@@ -37,7 +37,6 @@ void Dijkstra() {
                  greater<pair<int64_t, int>>>
       pq;
   vector<int64_t> dists(n + 1, kInt64Max);
-  vector<pair<int, int>> prevs(n + 1);
 
   for (int interview_city : interview_cities) {
     pq.push({0, interview_city});
@@ -61,8 +60,6 @@ void Dijkstra() {
       if (next_dist < dists[next_node]) {
         pq.push({next_dist, next_node});
         dists[next_node] = next_dist;
-        prevs[next_node].first = curr_node;
-        prevs[next_node].second = delta;
       }
     }
   }
