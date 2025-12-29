@@ -19,6 +19,9 @@ void Solve() {
   for (int i = 1; i < n; ++i) {
     for (int j = 0; j <= 9; ++j) {
       for (int k = 0; k < 1024; ++k) {
+        if (dp[i][j][k] == 0)
+          continue;
+
         if (j >= 1) {
           dp[i + 1][j - 1][k | (1 << (j - 1))] += dp[i][j][k];
           dp[i + 1][j - 1][k | (1 << (j - 1))] %= 1'000'000'000;
