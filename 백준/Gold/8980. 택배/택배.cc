@@ -1,9 +1,8 @@
 #include <algorithm>
 #include <iostream>
-#include <queue>
-#include <tuple>
-#include <utility>
 #include <vector>
+#include <tuple>
+
 using namespace std;
 
 struct Delivery {
@@ -11,18 +10,18 @@ struct Delivery {
   int to;
   int box_count;
 
+  // [수정 1] 받는 마을(to)을 기준으로 오름차순 정렬해야 최적해를 보장합니다.
+  // 받는 마을이 같다면 보내는 마을(from) 순으로 정렬합니다.
   bool operator<(const Delivery& rhs) const {
-    return tie(from, to, box_count) < tie(rhs.from, rhs.to, rhs.box_count);
-  }
-
-  bool operator>(const Delivery& rhs) const {
-    return rhs < *this;
+    if (to != rhs.to) return to < rhs.to;
+    return from < rhs.from;
   }
 };
 
 int n, c, m;
-Delivery deliveries[10'000];
-int delivery_info[2'001];
+Delivery deliveries[10000];
+// [수정 2] 각 마을 위치(구간)별로 현재 트럭에 실려있는 짐의 양을 저장하는 배열입니다.
+int truck_load[2001]; 
 
 void GetInput() {
   cin.tie(nullptr);
@@ -36,53 +35,38 @@ void GetInput() {
 }
 
 void Solve() {
+  // 받는 마을 순서로 정렬
   sort(deliveries, deliveries + m);
 
-  int prev_from = 0;
-  int current_box_count = 0;
   int total_box_count = 0;
-  priority_queue<pair<int, int>> pq;
 
   for (int i = 0; i < m; ++i) {
     int from = deliveries[i].from;
     int to = deliveries[i].to;
     int box_count = deliveries[i].box_count;
 
-    // Unload boxes as we have already reached from.
-    for (int visited = prev_from + 1; visited <= from; ++visited)
-      current_box_count -= delivery_info[visited];
-
-    int add_up = min(current_box_count + box_count, c) - current_box_count;
-    int remaining = box_count - add_up;
-
-    while (!pq.empty() && to < pq.top().first) {
-      int val = pq.top().second;
-      if (remaining >= val) {
-        add_up += val;
-        delivery_info[pq.top().first] -= val;
-        total_box_count -= val;
-        current_box_count -= val;
-      } else {
-        add_up += remaining;
-        pair<int, int> temp = pq.top();
-        pq.pop();
-        delivery_info[temp.first] -= remaining;
-        total_box_count -= remaining;
-        current_box_count -= remaining;
-        temp.second -= remaining;
-        pq.push(temp);
-        break;
+    // 1. 현재 배송할 구간(from ~ to-1)에서 트럭에 가장 짐이 많이 실린 양(max_load)을 찾습니다.
+    // to에 도착하면 내리므로 to-1까지만 확인합니다.
+    int max_load_on_path = 0;
+    for (int j = from; j < to; ++j) {
+      if (truck_load[j] > max_load_on_path) {
+        max_load_on_path = truck_load[j];
       }
-      pq.pop();
     }
 
-    pq.push({to, add_up});
+    // 2. 현재 배송 건을 얼마나 더 실을 수 있는지 계산합니다.
+    // (트럭 용량 - 구간 내 최대 적재량) 과 (보내려는 박스 수) 중 작은 값
+    int can_load = min(box_count, c - max_load_on_path);
 
-    delivery_info[to] += add_up;
-    current_box_count += add_up;
-    total_box_count += add_up;
-
-    prev_from = from;
+    // 3. 실을 수 있는 만큼 싣고, 결과에 더합니다.
+    if (can_load > 0) {
+      total_box_count += can_load;
+      
+      // 해당 구간의 트럭 적재량을 갱신합니다.
+      for (int j = from; j < to; ++j) {
+        truck_load[j] += can_load;
+      }
+    }
   }
 
   cout << total_box_count << '\n';
